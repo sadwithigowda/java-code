@@ -1,0 +1,25 @@
+class Solution {
+    public int divide(int dividend, int divisor) {
+        if (dividend == Integer.MIN_VALUE && divisor == -1) {
+            return Integer.MAX_VALUE;
+        }
+        boolean negative = (dividend < 0) ^ (divisor < 0);
+        int dividendNeg = dividend < 0 ? dividend : -dividend;
+        int divisorNeg = divisor < 0 ? divisor : -divisor;
+
+        int quotient = 0;
+        while (dividendNeg <= divisorNeg) {
+            int tempDivisor = divisorNeg;
+            int count = 1;
+            while (tempDivisor >= -1073741824 && (tempDivisor << 1) >= dividendNeg) {
+                tempDivisor <<= 1;
+                count <<= 1;
+            }
+
+            dividendNeg -= tempDivisor;
+            quotient += count;
+        }
+
+        return negative ? -quotient : quotient;
+    }
+}
