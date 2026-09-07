@@ -1,0 +1,18 @@
+class Solution {
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int totalRows = triangle.size();
+        
+        int[] pathSums = new int[totalRows];
+        for (int col = 0; col < totalRows; col++) {
+            pathSums[col] = triangle.get(totalRows - 1).get(col);
+        }
+        for (int row = totalRows - 2; row >= 0; row--) {
+            for (int col = 0; col <= row; col++) {
+                int smallerBelow = Math.min(pathSums[col], pathSums[col + 1]);
+                int currentValue = triangle.get(row).get(col);
+                pathSums[col] = currentValue + smallerBelow;
+            }
+        }
+        return pathSums[0];
+    }
+}
